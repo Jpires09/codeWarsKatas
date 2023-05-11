@@ -1,4 +1,15 @@
 var uniqueInOrder=function(iterable){
+//  função que será chamada ao longo do programa, 
+//  para montar respostas
+    function buildAnswer(string) {
+        let answer = []
+        for (let j = 0; j < string.length; j++) {
+            answer[j] = string[j]
+        }
+        return answer
+    }
+
+    //  converte arrays de integers em string
     if (typeof iterable == 'object') {
         let newIterable = iterable.toString()
         console.log(newIterable)
@@ -32,8 +43,8 @@ var uniqueInOrder=function(iterable){
         let i = 0;
         //  remove ',' dos array's
         for (let j = 0; j < iterable.length; j++) {
-            if (iterable[j] == ',') {
-                iterable = iterable.replace(',', '')
+            if (iterable[j] === ',') {
+                iterable = iterable.split(",")
             }            
         }
         const originalLength = iterable.length
@@ -54,12 +65,8 @@ var uniqueInOrder=function(iterable){
             i++
             
         }
-        let answer = []
-        for (let j = 0; j < sliced.length; j++) {
-            answer[j] = sliced[j]
-        }
         
-        return answer
+        return buildAnswer(sliced)
     }
 }
 
