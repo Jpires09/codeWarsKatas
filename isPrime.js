@@ -1,8 +1,5 @@
-
+// verifica se um inteiro positivo é primo
 function isPrime(num) {
-  if (num <= 1) {
-    return false;
-  }
   if (num <= 3) {
     return true;
   }
