@@ -18,7 +18,7 @@ function sumOfDivided(lst = []) {
     // fills the arrays of the finalArray
     function fillInternArray(prime){
     for (let i = 0; i < p.length; i++) {
-        if (sumDivisibles(prime , lst) !== 0) {
+        if (sumDivisibles(prime , lst) !== 'NaN') {
             return [prime , sumDivisibles(prime,lst)]
         }
     }
@@ -36,8 +36,7 @@ function sumOfDivided(lst = []) {
     }
     // variables:
     let p = []
-    let internArray = []
-    let finalArray = [[]]
+    let finalArray = []
     // fill the p array with the modules of j
     for (let i = 0; i < lst.length; i++) {
         for (let j = 0; j < lst[i]; j++) {
@@ -45,20 +44,25 @@ function sumOfDivided(lst = []) {
                 p.push(Math.sqrt(j**2))
             } 
         }
+        let padding = 0
+        for (let i = 0; i < (p.length + padding); i++) {
+            debugger
+            let trimOut = true
+            for (let j = 0; j < lst.length; j++) {
+                if (lst[j] % p[i] == 0){
+                    trimOut = false
+                } else if(sumDivisibles(p[i],lst) == 0){
+                    trimOut = false
+                }
+            }
+            if (trimOut) {
+                p.splice((i-padding),1)
+                padding++
+            }             
+        }
     // fill finalArray
     for (let i = 0; i < p.length; i++) {
         finalArray.push(fillInternArray(p[i]))              
-    }
-    //trims finalArray
-    let counter = 0
-
-    for (let i = 0; i < finalArray.length; i++) {
-        if (finalArray[i].includes('not apliable')) {
-            counter++
-        }
-        for (let i = 0; i < counter; i++) {
-            finalArray.pop()
-        }
     }
 
 
@@ -69,6 +73,6 @@ function sumOfDivided(lst = []) {
  
 //const testing = ([12, 15], [ [2, 12], [3, 27], [5, 15] ]);
 //testing([15,21,34,30,45], [ [2, 54], [3, 135], [5, 90], [7, 21] ]);
-const testing = [12,15]
+const testing = [15,21,24,30,45]
 console.log(sumOfDivided(testing)) 
 console.log(typeof testing) 
