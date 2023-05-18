@@ -1,0 +1,3 @@
+function dirReduc(a){
+    
+}
