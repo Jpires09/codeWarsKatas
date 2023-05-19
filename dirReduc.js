@@ -1,54 +1,50 @@
-function dirReduc(a){
-    let wrongDir = []
-    for (let i = 0; i < a.length; i++) {
-        let j = 0
-        switch (a[i]) {
-            case 'NORTH':
-                
-                while((a[j] != 'SOUTH') || (j > a.length)) {
-                    j++
-                }
-                if (a[j] == 'SOUTH') {
-                    a.splice(j,1)
-                    a.splice(i,1)
-                    wrongDir.push('S<->N')
-                }
-                break;
-                case 'SOUTH':
-                    while((a[j] != 'NORTH') || (j > a.length)) {
-                        j++
-                    }
-                    if (a[j] == 'NORTH') {
-                        a.splice(j,1)
-                        a.splice(i,1)
-                        wrongDir.push('S<->N')
-                    }
-                    break;
-                    case 'WEST':
-                        while((a[j] != 'EAST') || (j > a.length)) {
-                            j++
-                        }
-                        if (a[j] == 'EAST') {
-                            a.splice(j,1)
-                            a.splice(i,1)
-                            wrongDir.push('W<->E')
-                        }
-                        break;    
-                        case 'EAST':
-                            while((a[j] != 'WEST') || (j > a.length)) {
-                                j++
-                            }
-                            if (a[j] == 'WEST') {
-                                a.splice(j,1)
-                                a.splice(i,1)
-                                wrongDir.push('W<->E')
-                            }
-                            break;            
-            default:
-                break;
-        }       
+function dirReduc(directions) {
+  const oppositeDirections = {
+    NORTH: 'SOUTH',
+    SOUTH: 'NORTH',
+    WEST: 'EAST',
+    EAST: 'WEST'
+  };
+
+  const reducedDirections = [];
+
+  for (const direction of directions) {
+    const previousDirection = reducedDirections[reducedDirections.length - 1];
+
+    if (previousDirection === oppositeDirections[direction]) {
+      reducedDirections.pop();
+    } else {
+      reducedDirections.push(direction);
     }
-    return wrongDir
+  }
+
+  return reducedDirections;
 }
 
-console.log(dirReduc(["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"]))
+// function dirReduc(arr){
+//   for(let i=0; i<arr.length; i++){
+//       switch ( arr[i] + arr[i+1] ){
+      
+//               case "EASTWEST":
+//               arr.splice(i,2);
+//               i = i - i -1;  // ( i = -1 ) => reset the loop to scan the array from i=0  
+//               break;
+         
+//               case "WESTEAST":
+//               arr.splice(i,2);
+//               i = i - i -1;
+//               break;
+         
+//               case "NORTHSOUTH":
+//               arr.splice(i,2);
+//               i = i - i -1;
+//               break;
+         
+//               case "SOUTHNORTH":
+//               arr.splice(i,2);
+//               i = i - i -1;
+//               break;
+//       }
+//   }
+//   return arr
+// }
