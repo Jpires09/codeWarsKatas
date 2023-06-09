@@ -11,34 +11,58 @@
 // the first set must sum up to the same value as the integers in the second set. The sets can be returned in a tuple,
 //  list, or array, depending on language.
 function createTwoSetsOfEqualSum(n) {
-  // If the sum of all numbers from 1 to n are odd, return an empty array.
-  if ((n * (n+1) / 2) % 2 !== 0) return []
-  
-  // Initializing the result arrays
-  let [arr1, arr2] = [[], []];
-  
-  // Tracking the sum of each array
-  let sum1 = 0;
-  let sum2 = 0;
+  let v = [];
 
-  // Iterating the loop in reverse to start with the largest values
-  for (let i = n; i > 0; i--) {
-    // If sum1 is less than or equal to sum2
-    if (sum1 <= sum2) {
-      // Push the value to arr1
-      arr1.push(i);
-      // and increment the value of sum1
-      sum1 += i;
-    } else {
-      // Push the value to arr2
-      arr2.push(i);
-      // and increment the value of sum2
-      sum2 += i;
-    }
+  for (let i = 0; i < n; i++) {
+        v.push(i + 1)
   }
-  // or return the array if the values are equal
-  return [arr1, arr2];
+  if (v.reduce((accumulator,number) => accumulator + number,0) % 2 == 0) {
+      let v1 = []
+      let v2 = []
+      while (v.length >  0) {
+          v1.push(v.shift())
+          v1.push(v.pop())
+          v2.push(v.shift())
+          v2.push(v.pop())    
+      }
+      v.push(v1.sort((a, b) => a - b))
+      v.push(v2.sort((a, b) => a - b))
+      return v
+  }
+  return []
 }
 
 const n = 256;
 console.log(createTwoSetsOfEqualSum(n));
+
+
+//  correct answer:
+// function createTwoSetsOfEqualSum(n) {
+//   // If the sum of all numbers from 1 to n are odd, return an empty array.
+//   if ((n * (n+1) / 2) % 2 !== 0) return []
+  
+//   // Initializing the result arrays
+//   let [arr1, arr2] = [[], []];
+  
+//   // Tracking the sum of each array
+//   let sum1 = 0;
+//   let sum2 = 0;
+
+//   // Iterating the loop in reverse to start with the largest values
+//   for (let i = n; i > 0; i--) {
+//     // If sum1 is less than or equal to sum2
+//     if (sum1 <= sum2) {
+//       // Push the value to arr1
+//       arr1.push(i);
+//       // and increment the value of sum1
+//       sum1 += i;
+//     } else {
+//       // Push the value to arr2
+//       arr2.push(i);
+//       // and increment the value of sum2
+//       sum2 += i;
+//     }
+//   }
+//   // or return the array if the values are equal
+//   return [arr1, arr2];
+// }
