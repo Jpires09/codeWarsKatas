@@ -51,9 +51,8 @@ function justify(text, width) {
     function isBlank(element) {
       return typeof element === 'string' && element.trim() === '';
     }
-
     let counter = width - newLine.size;
-    let i = 0;
+    let i = 1;
     while (counter > 0) {
       if (isBlank(newLine.words[i].text)) {
         newLine.words[i].text += ' ';
@@ -68,10 +67,12 @@ function justify(text, width) {
         i = 0;
       }
     }
-    newLine = newLine.words.map(word => word.text).join('');
+  
     justifiedPage.addLine(newLine);
   }
-  return justifiedPage.lines.map(line => line.words).join('\n');
+
+return justifiedPage.lines.map(line => line.words.map(word => word.text).join(' ')).join('\n');
+
 }
 
 const LIPSUM =
@@ -79,3 +80,6 @@ const LIPSUM =
 
 const lines = justify(LIPSUM, 30);
 console.log(lines);
+
+
+
