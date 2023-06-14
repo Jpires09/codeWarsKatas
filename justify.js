@@ -1,78 +1,28 @@
-function justify(text, width) {
-  class Page {
-    constructor() {
-      this.lines = [];
+/**
+ * @param {String} str - inital string
+ * @param {Number} len - line length
+ */
+function justify(str, len) {
+  var words = str.split(' ');
+  var lines = [];
+  var lastLine = words.reduce(function(line, word) {
+    if (line) {
+      if (line.length + word.length + 1 <= len)
+        return line + ' ' + word;
+      lines.push(line);
     }
-
-    addLine(line) {
-      this.lines.push(line);
-    }
-  }
-
-  class Line {
-    constructor(size) {
-      this.words = [];
-      this.size = size;
-    }
-
-    addWord(word) {
-      this.words.push(word);
-      this.size += word.size;
-    }
-  }
-
-  class Word {
-    constructor(text, size) {
-      this.text = text;
-      this.size = size;
-    }
-  }
-
-  const arrText = text.split(' ');
-  const justifiedPage = new Page();
-  while (arrText.length > 0) {
-    let newLine = new Line(0);
-    // Populate lines
-    while (newLine.size + arrText[0].length <= width) {
-      const newWord = new Word(arrText.shift(), 0);
-      newWord.size = newWord.text.length;
-      newLine.addWord(newWord);
-      if  (arrText.length === 0){
-        break
-      }
-      if (!(newLine.size + arrText[0].length <= width)) {
-        break;
-      } else {
-        newLine.addWord(new Word(' ', 1));
-      }
-    }
-
-    // Enhance blanks
-    function isBlank(element) {
-      return typeof element === 'string' && element.trim() === '';
-    }
-    let counter = width - newLine.size;
-    let i = 1;
-    while (counter > 0) {
-      if (isBlank(newLine.words[i].text)) {
-        newLine.words[i].text += ' ';
-        newLine.size++;
-        counter = width - newLine.size;
-        i += 2;
-      } else {
-        i++;
-      }
-
-      if (i >= newLine.words.length && counter > 0) {
-        i = 0;
-      }
-    }
-  
-    justifiedPage.addLine(newLine);
-  }
-
-return justifiedPage.lines.map(line => line.words.map(word => word.text).join(' ')).join('\n');
-
+    return word;
+  });
+  lines = lines.map(function(line) {
+    if (line.indexOf(' ') >= 0)
+      for (var lineLen = line.length; lineLen < len; )
+        line = line.replace(/ +/g, function(spaces) {
+          return spaces + (lineLen++ < len ? ' ' : '');
+        });
+    return line;
+  });
+  lastLine && lines.push(lastLine);
+  return lines.join('\n');
 }
 
 const LIPSUM =
@@ -81,5 +31,4 @@ const LIPSUM =
 const lines = justify(LIPSUM, 30);
 console.log(lines);
 
-
-
+// justify=(t,W)=>t.split` `.reduce((a,w)=>(!(l=a[L='length'])||(a[l-1]+w)[L]>=W)?[...a,w]:(a[l-1]+=' '+w,a),[]).map(l=>l.split` `.map((w,i,a)=>w+' '.repeat(~~((x=W-l[L])/(y=a[L]-1))+1+(i<x%y))).join``).join`\n`.replace(/ +$/gm,'').replace(/(?<=(\n|^).+) +(?=.+$)/g,' ')
